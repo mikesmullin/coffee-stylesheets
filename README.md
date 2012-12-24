@@ -20,7 +20,8 @@ stylesheet = ->
       font_size '12px'
       border_radius px 5
 
-console.log css = engine.render stylesheet
+engine.render stylesheet, (err, css) ->
+  console.log css
 ```
 
 and get back a CSS3 stylesheet, like:
