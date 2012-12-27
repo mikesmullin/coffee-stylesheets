@@ -46,25 +46,25 @@
       }
     };
     g.s = function(s, f) {
-      s = s.split(/, */);
+      s = s.replace(/(^\s*|\s*$)/, '').split(/,\s*/);
       return (this.selector(s))(f);
     };
     this.o = o;
   };
   C.prototype.render = function(f, cb) {
-    var dom, g, k, kk, l, ll, o, styles, t;
+    var dom, g, k, kk, l, o, styles, t;
     l = 0;
-    ll = 0;
     dom = [];
     styles = [];
     o = this.o;
     g = o.globals;
     g.selector = function(n) {
       return function() {
-        var a, b, c, s, v, w, x;
+        var a, b, c, pl, s, v, w, x;
         a = arguments;
         b = {};
-        l++;
+        pl = l;
+        l = styles.length;
         s = '';
         for (x in a) {
           s += y(a[x]);
@@ -108,10 +108,7 @@
         };
         f();
         dom.pop();
-        l--;
-        if (l === ll) {
-          return ll = l = styles.length;
-        }
+        return l = pl;
       };
     };
     g.property = function(n) {

@@ -10,7 +10,6 @@
   # constructor
   C = (o) -> # options
     o = o or {}
-    # TODO: provide a couple different format modes? line numbers?
     # only non-false need be declared
     #o.format = o.format or false # add whitespace to output
     o.space = if o.format then ' ' else ''
@@ -37,15 +36,14 @@
       else
         @literal "/*#{s}*/"
     g.s = (s,f)->
-      s=s.split /, */
+      s=s.replace(/(^\s*|\s*$)/,'').split /,\s*/
       (@selector(s))(f)
     @o = o
     return
 
   C::render = (f, cb) ->
     # setup globals
-    l=0  # hierarchical level
-    ll=0 # last root level
+    l=0 # hierarchical level
     dom=[] # selector matrices
     styles=[] # selector blocks
     o=@o # options (without requirement of `this.` context)
@@ -54,7 +52,8 @@
       a=arguments
       b = {} # attributes object
       # f # content function
-      l++ # hierarchical level
+      pl=l # previous level
+      l=styles.length # hierarchical level
       # x # iteration integer
       s='' # interface signature
       for x of a # generate interface signature
@@ -86,8 +85,7 @@
         properties: []
       f()
       dom.pop()
-      l--
-      if l is ll then ll = l = styles.length
+      l=pl
     g.property=(n)->(s)->
       styles[l].properties.push [n, s]
     g.literal=(s)->
