@@ -30,11 +30,11 @@
       )(x)
     g.comment = (s,f) ->
       if f
-        @literal '/*'+s
+        @literal o.newline+'/*'+o.space+s
         f()
-        @literal '*/'
+        @literal o.space+'*/'
       else
-        @literal "/*#{s}*/"
+        @literal o.newline+'/*'+o.space+s+o.space+'*/'
     g.s = (s,f)->
       s=s.replace(/(^\s*|\s*$)/,'').split /,\s*/
       (@selector(s))(f)

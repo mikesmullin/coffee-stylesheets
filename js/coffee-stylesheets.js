@@ -38,11 +38,11 @@
     }
     g.comment = function(s, f) {
       if (f) {
-        this.literal('/*' + s);
+        this.literal(o.newline + '/*' + o.space + s);
         f();
-        return this.literal('*/');
+        return this.literal(o.space + '*/');
       } else {
-        return this.literal("/*" + s + "*/");
+        return this.literal(o.newline + '/*' + o.space + s + o.space + '*/');
       }
     };
     g.s = function(s, f) {
