@@ -89,22 +89,28 @@
     g.property=(n)->(s)->
       styles[l].properties.push [n, s]
     g.literal=(s)->
-      styles[l].properties.push s
+      if l is 0
+        styles.push s
+      else
+        styles[l].properties.push s
 
     # begin render
     (Function 'g', 'with(g){('+f+')()}')(g)
 
     # compile result
     t = '' # resulting template string
-    for k of styles when styles[k].properties.length
-      t += "#{styles[k].selector.join(','+o.newline)}#{o.space}{#{o.newline}" # selector
-      for kk of styles[k].properties
-        if typeof styles[k].properties[kk] is 'object'
-          t += "#{o.indent}#{styles[k].properties[kk][0]}:#{o.space}#{styles[k].properties[kk][1]};#{o.newline}" # property
-        else
-          t += o.indent + styles[k].properties[kk] + o.newline # literal
-      if not o.format and t[t.length-1] is ';' then t = t.slice(0,-1) # chop last semi-colon
-      t += "}#{o.newline}"
+    for k of styles
+      if typeof styles[k] is 'string'
+        t += styles[k] + o.newline # literal
+      else if styles[k].properties.length
+        t += "#{styles[k].selector.join(','+o.newline)}#{o.space}{#{o.newline}" # selector
+        for kk of styles[k].properties
+          if typeof styles[k].properties[kk] is 'object'
+            t += "#{o.indent}#{styles[k].properties[kk][0]}:#{o.space}#{styles[k].properties[kk][1]};#{o.newline}" # property
+          else
+            t += o.indent + styles[k].properties[kk] + o.newline # literal
+        if not o.format and t[t.length-1] is ';' then t = t.slice(0,-1) # chop last semi-colon
+        t += "}#{o.newline}"
     @on.end t, (err, css) -> # execute any callback functions
       cb err, css
     return
