@@ -49,6 +49,9 @@
       s = s.replace(/(^\s*|\s*$)/, '').split(/,\s*/);
       return (this.selector(s))(f);
     };
+    g.prop = function(k, v) {
+      return (this.property(k))(v);
+    };
     this.o = o;
   };
   C.prototype.render = function(f, cb) {

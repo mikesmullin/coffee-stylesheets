@@ -38,6 +38,8 @@
     g.s = (s,f)->
       s=s.replace(/(^\s*|\s*$)/,'').split /,\s*/
       (@selector(s))(f)
+    g.prop = (k,v)->
+      (@property(k))(v)
     @o = o
     return
 
