@@ -63,7 +63,7 @@
     g = o.globals;
     g.selector = function(n) {
       return function() {
-        var a, b, c, pl, s, v, w, x;
+        var a, b, c, pl, ps, s, v, w, x, _ref;
         a = arguments;
         b = {};
         pl = l;
@@ -98,8 +98,13 @@
           } else {
             x = [];
             for (w in b) {
-              for (v in dom[c]) {
-                x.push(b[w] + ' ' + dom[c][v]);
+              _ref = dom[c];
+              for (v in _ref) {
+                ps = _ref[v];
+                if (ps.indexOf('&') === -1) {
+                  ps = '& ' + ps;
+                }
+                x.push(ps.replace('&', b[w]));
               }
             }
             b = x;

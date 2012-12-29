@@ -79,8 +79,9 @@
         else
           x = []
           for w of b
-            for v of dom[c]
-              x.push b[w]+' '+dom[c][v]
+            for v, ps of dom[c]
+              ps = '& '+ps if ps.indexOf('&') is -1
+              x.push ps.replace '&', b[w]
           b = x
       styles[l] =
         selector: b
