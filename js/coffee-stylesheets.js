@@ -112,7 +112,21 @@
         }
         styles[l] = {
           selector: b,
-          properties: []
+          properties: [],
+          lineNumber: (function(o) {
+            var E, e, p;
+            E = Error;
+            p = 'prepareStackTrace';
+            b = E[p];
+            E[p] = (function(_, s) {
+              return s;
+            });
+            e = new E;
+            E.captureStackTrace(e, o);
+            s = e.stack;
+            E[p] = b;
+            return s[1].getLineNumber();
+          })(arguments.callee)
         };
         f();
         dom.pop();
@@ -137,6 +151,9 @@
       if (typeof styles[k] === 'string') {
         t += styles[k] + o.newline;
       } else if (styles[k].properties.length) {
+        if (o.format) {
+          t += "/* line " + styles[k].lineNumber + (o.file ? ', ' + o.file : '') + " */\n";
+        }
         t += "" + (styles[k].selector.join(',' + o.newline)) + o.space + "{" + o.newline;
         for (kk in styles[k].properties) {
           if (typeof styles[k].properties[kk] === 'object') {
@@ -145,9 +162,10 @@
             t += o.indent + styles[k].properties[kk] + o.newline;
           }
         }
-        if (!o.format && t[t.length - 1] === ';') {
+        if (!o.format && t.slice(-1) === ';') {
           t = t.slice(0, -1);
         }
+        t = t.replace(new RegExp(o.newline + '$'), o.space);
         t += "}" + o.newline;
       }
     }

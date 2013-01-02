@@ -4,8 +4,7 @@
     return module.exports = definition
   return context.CoffeeStylesheets = definition
 )(@, (->
-  # abbreviation for typeof, because we use it a lot
-  y=(v)->(typeof v)[0]
+  y=(v)->(typeof v)[0] # abbreviation for typeof, because we use it a lot
 
   # constructor
   C = (o) -> # options
@@ -86,6 +85,7 @@
       styles[l] =
         selector: b
         properties: []
+        lineNumber: ((o)->E=Error;p='prepareStackTrace';b=E[p];E[p]=((_,s)->s);e=new E;E.captureStackTrace e,o;s=e.stack;E[p]=b;s[1].getLineNumber())(arguments.callee)
       f()
       dom.pop()
       l=pl
@@ -106,13 +106,15 @@
       if typeof styles[k] is 'string'
         t += styles[k] + o.newline # literal
       else if styles[k].properties.length
+        t += "/* line #{styles[k].lineNumber}#{if o.file then ', '+o.file else ''} */\n" if o.format # debug comment
         t += "#{styles[k].selector.join(','+o.newline)}#{o.space}{#{o.newline}" # selector
         for kk of styles[k].properties
           if typeof styles[k].properties[kk] is 'object'
             t += "#{o.indent}#{styles[k].properties[kk][0]}:#{o.space}#{styles[k].properties[kk][1]};#{o.newline}" # property
           else
             t += o.indent + styles[k].properties[kk] + o.newline # literal
-        if not o.format and t[t.length-1] is ';' then t = t.slice(0,-1) # chop last semi-colon
+        if not o.format and t.slice(-1) is ';' then t = t.slice(0,-1) # chop last semi-colon
+        t = t.replace(new RegExp(o.newline+'$'), o.space) # chop last line-break
         t += "}#{o.newline}"
     @on.end t, (err, css) -> # execute any callback functions
       cb err, css
