@@ -1,6 +1,6 @@
 {
   "name": "coffee-stylesheets",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Transpiler similar to SASS/SCSS/LESS/Stylus, except its 100% CoffeeScript!",
   "main": "js/coffee-stylesheets.js",
   "directories": {
@@ -27,7 +27,6 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "devDependencies": {
-    "chai": "~1.4.0"
-  },
-  "dependencies": {}
+    "chai": "*"
+  }
 }

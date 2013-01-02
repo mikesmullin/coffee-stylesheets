@@ -1,27 +1,12 @@
 # What if you could write CoffeeScript like:
 
 ```coffeescript
-engine = new CoffeeStylesheets
- format: true
- globals:
-   px: (i) -> i + 'px'
-   # this is like a nib/compass cross-browser helper
-   border_radius: (s)-> @literal """
-     -moz-border-radius: #{s}; /* Firefox */
-       -webkit-border-radius: #{s}; /* Safari, Chrome */
-       border-radius: #{s}; /* CSS3 */
-   """
-
-stylesheet = ->
-  body ->
-    background 'black'
-    color 'red'
-    p ->
-      font_size '12px'
-      border_radius px 5
-
-engine.render stylesheet, (err, css) ->
-  console.log css
+body ->
+  background 'black'
+  color 'red'
+  p ->
+    font_size '12px'
+    border_radius px 5
 ```
 
 and get back a CSS3 stylesheet, like:
@@ -40,6 +25,23 @@ body p {
 ```
 
 Now, you can!
+
+Just wrap it in this:
+
+```coffeescript
+engine = new CoffeeStylesheets
+ format: true
+ globals:
+   px: (i) -> i + 'px'
+   # this is like a nib/compass cross-browser helper
+   border_radius: (s)-> @literal """
+     -moz-border-radius: #{s}; /* Firefox */
+       -webkit-border-radius: #{s}; /* Safari, Chrome */
+       border-radius: #{s}; /* CSS3 */
+   """
+engine.render stylesheet, (err, css) ->
+  console.log css
+```
 
 ## Why this monstrosity?
 
