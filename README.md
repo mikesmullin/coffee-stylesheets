@@ -64,3 +64,4 @@ the engine provided, as well.
 * Works well with [CoffeeTemplates](https://github.com/mikesmullin/coffee-templates) 
 * Has a plugin called [CoffeeSprites](https://github.com/mikesmullin/coffee-sprites)
 * Has a plugin called [CoffeeStylesheetsCompassFramework](https://github.com/mikesmullin/coffee-stylesheets-compass-framework)
+* Thanks to Nino Paolo for beginning work on a [SASS to CoffeeStylesheets Converter](https://github.com/paolooo/coffee-espresso-two-shots)
