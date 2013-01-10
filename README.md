@@ -20,9 +20,9 @@ pie_gradient = (a, b) ->
   prop '-pie-background', linear_gradient a, b # prop stands for property
 s 'html.ie7', -> # s stands for selector
   s '.section#content', ->
-    table ->
+    table '#anyId.anyClass1.anyClass2', ->
       serve_pie()
-      th ->
+      th id: 'anotherId', class: 'anotherClass1 anotherClass2', ->
         serve_pie()
         # literal means literally what you provide will be output without modification
         literal '-webkit-filter: blur(2px) grayscale (.5) opacity(0.8) hue-rotate(120deg);'
@@ -44,11 +44,11 @@ body p {
 
 /* and now something more complex */
 /* line 1421, precompile/assets/stylesheets/ie7.css.coffee */
-html.ie7 .section#content table {
+html.ie7 .section#content table#anyId.anyClass1.anyClass2 {
   position: relative;
   behavior: url(/assets/css3pie/PIE.htc); }
 /* line 1423, precompile/assets/stylesheets/ie7.css.coffee */
-html.ie7 .section#content table th {
+html.ie7 .section#content table#anyId.anyClass1.anyClass2 th#anotherId.anotherClass1.anotherClass2 {
   position: relative;
   behavior: url(/assets/css3pie/PIE.htc); 
   -webkit-filter: blur(2px) grayscale (.5) opacity(0.8) hue-rotate(120deg); }
