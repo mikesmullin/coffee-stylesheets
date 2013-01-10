@@ -17,13 +17,14 @@ serve_pie = ->
   prop 'behavior', 'url(/assets/css3pie/PIE.htc)'
 pie_gradient = (a, b) ->
   background a
-  prop '-pie-background', linear_gradient a, b
-s 'html.ie7', ->
+  prop '-pie-background', linear_gradient a, b # prop stands for property
+s 'html.ie7', -> # s stands for selector
   s '.section#content', ->
     table ->
       serve_pie()
       th ->
         serve_pie()
+        # literal means literally what you provide will be output without modification
         literal '-webkit-filter: blur(2px) grayscale (.5) opacity(0.8) hue-rotate(120deg);'
 ```
 
