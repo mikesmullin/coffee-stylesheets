@@ -9,21 +9,48 @@ body ->
   p ->
     font_size '12px'
     border_radius px 5
+
+comment 'and now something more complex'
+serve_pie = ->
+  # adds ie7 support for css3 border-radius, box-shadow, and linear-gradient
+  position 'relative'
+  prop 'behavior', 'url(/assets/css3pie/PIE.htc)'
+pie_gradient = (a, b) ->
+  background a
+  prop '-pie-background', linear_gradient a, b
+s 'html.ie7', ->
+  s '.section#content', ->
+    table ->
+      serve_pie()
+      th ->
+        serve_pie()
+        literal '-webkit-filter: blur(2px) grayscale (.5) opacity(0.8) hue-rotate(120deg);'
 ```
 
 and get back a CSS3 stylesheet, like:
 
 ```css
+/* line 1418, precompile/assets/stylesheets/ie7.css.coffee */
 body {
   background: black;
-  color: red;
-}
+  color: red; }
+/* line 1420, precompile/assets/stylesheets/ie7.css.coffee */
 body p {
   font-size: 12px;
-  -moz-border-radius: 5px; /* Firefox */
-  -webkit-border-radius: 5px; /* Safari, Chrome */
-  border-radius: 5px; /* CSS3 */
-}
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px; }
+
+/* and now something more complex */
+/* line 1421, precompile/assets/stylesheets/ie7.css.coffee */
+html.ie7 .section#content table {
+  position: relative;
+  behavior: url(/assets/css3pie/PIE.htc); }
+/* line 1423, precompile/assets/stylesheets/ie7.css.coffee */
+html.ie7 .section#content table th {
+  position: relative;
+  behavior: url(/assets/css3pie/PIE.htc); 
+  -webkit-filter: blur(2px) grayscale (.5) opacity(0.8) hue-rotate(120deg); }
 ```
 
 ## Now, you can!
